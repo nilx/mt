@@ -1,0 +1,57 @@
+# Copyright 2010 IPOL Image Processing On Line http://www.ipol.im/
+# Author: Nicolas Limare <nicolas.limare@cmla.ens-cachan.fr>
+#
+# Copying and distribution of this file, with or without
+# modification, are permitted in any medium without royalty provided
+# the copyright notice and this notice are preserved.  This file is
+# offered as-is, without any warranty.
+
+PROJECT	= mt19937ar
+DATE  	= $(shell date -u +%Y%m%d)
+RELEASE_TAG   = 0.$(DATE)
+
+# use a cached compiler
+CC	  = ccache cc
+
+# optimized compilation
+COPT += -march=pentium-m -msse3 -ffast-math
+
+ifdef DEBUG
+# debugging, with electricfence
+CFLAGS	= -O0 -g -lefence
+endif
+
+# source documentation
+srcdoc	: $(SRC)
+	doxygen doxygen.conf
+
+# check the source code
+.PHONY	: lint
+lint	: lint.flag
+lint.flag	: $(CSRC)
+	splint -weak $?
+	touch $@
+
+# update the C headers
+%.h	: %.c
+	echo "#ifdef __cplusplus\nextern \"C\" {\n#endif\n" > $@
+	echo "#define MT19937AR_VERSION $(RELEASE_TAG)\n" >> $@
+	cproto $< >> $@
+	echo "\n#ifdef __cplusplus\n}\n#endif" >> $@
+
+# cleanup the source code
+.PHONY	: beautify
+beautify	: beautify.flag
+beautify.flag	: $(CSRC)
+	for FILE in $?; do \
+		expand $$FILE | sed 's/[ \t]*$$//' > $$FILE.$$$$ \
+		&& indent -kr -bl -bli0 -i4 -l78 -nut -nce -sob -sc \
+			$$FILE.$$$$ -o $$FILE \
+		&& rm $$FILE.$$$$; \
+	done
+	touch $@
+
+.PHONY	: release
+release	:
+	git archive --format=tar --prefix=$(PROJECT)-$(RELEASE_TAG)/ HEAD \
+	        | gzip > ../$(PROJECT)-$(RELEASE_TAG).tgz
