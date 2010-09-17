@@ -50,25 +50,13 @@ randomness for such number in double-precision) with mt_genrand_res53().
 
 ## EXAMPLE
 
-    #include <time.h>
-    #include <mt19937ar.h>
-
-    double foo;
-
-    /*
-     * a possible (weak) initialization
-     * uses the current time, in seconds
-     */
-    mt_init_genrand((unsigned long int) time(NULL));
-
-    /*
-     * now we can get a pseudo-random value
-     */
-    foo = mt_genrand_res53();
+see mt19937ar_example.c
 
 # TODO
 
 * provide examples of better yet portable initializations
+* use better names
+* integer variant
 
 # COPYRIGHT
 

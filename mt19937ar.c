@@ -31,25 +31,6 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * @mainpage portable pseudo-random number generator
- *
- * README.txt:
- * @verbinclude README.txt
- */
-
-/** @file mt19937ar.c
- * @brief Mersenne Twister pseudo-RNG code
- *
- * This is the original code by Takuji Nishimura and Makoto Matsumoto,
- * amended to keep only the parts used.
- * Source : http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
- *
- * @author Makoto Matsumoto (1997 - 2002)
- * @author Takuji Nishimura (1997 - 2002)
- *
- */
-
 #include <stdio.h>
 
 /* Period parameters */
@@ -130,12 +111,36 @@ static unsigned long genrand_int32(void)
 static double genrand_res53(void)
 {
     unsigned long a = genrand_int32() >> 5, b = genrand_int32() >> 6;
-    return (a * 67108864.0 + b) * (1.0 / 9007199254740992.0);
+    return (1.0 * a * 67108864.0 + b) * (1.0 / 9007199254740992.0);
 }
 
+#undef MT_N
+#undef MT_M
+#undef MT_MATRIX_A
+#undef MT_UPPER_MASK
+#undef MT_LOWER_MASK
+
 /*
- * non-static content
+ * non-static original content
  */
+
+/** @file mt19937ar.c
+ * @brief Mersenne Twister pseudo-RNG code
+ *
+ * This is the original code by Takuji Nishimura and Makoto Matsumoto,
+ * amended to keep only the parts used.
+ * Source : http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
+ *
+ * @author Makoto Matsumoto (1997 - 2002)
+ * @author Takuji Nishimura (1997 - 2002)
+ *
+ */
+
+/* ensure consistency */
+#include "mt19937ar.h"
+
+/* string tag inserted into the binary, helps tracking versions */
+char _mt19937ar_tag[] = "using mt19937ar " MT19937AR_VERSION;
 
 /**
  * @brief initializes the generator with a seed
@@ -153,9 +158,3 @@ double mt_genrand_res53(void)
 {
     return genrand_res53();
 }
-
-#undef MT_N
-#undef MT_M
-#undef MT_MATRIX_A
-#undef MT_UPPER_MASK
-#undef MT_LOWER_MASK
