@@ -50,8 +50,7 @@ static int mti = MT_N + 1;      /**< mti==MT_N+1 means mt[MT_N]
 static void init_genrand(unsigned long s)
 {
     mt[0] = s & 0xffffffffUL;
-    for (mti = 1; mti < MT_N; mti++)
-    {
+    for (mti = 1; mti < MT_N; mti++) {
         mt[mti] = (1812433253UL * (mt[mti - 1] ^ (mt[mti - 1] >> 30)) + mti);
         /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
         /* In the previous versions, MSBs of the seed affect   */
@@ -71,20 +70,17 @@ static unsigned long genrand_int32(void)
     static unsigned long mag01[2] = { 0x0UL, MT_MATRIX_A };
     /* mag01[x] = x * MT_MATRIX_A  for x=0,1 */
 
-    if (mti >= MT_N)
-    {                           /* generate MT_N words at one time */
+    if (mti >= MT_N) {          /* generate MT_N words at one time */
         int kk;
 
         if (mti == MT_N + 1)    /* if init_genrand() has not been called, */
             init_genrand(5489UL);       /* a default initial seed is used */
 
-        for (kk = 0; kk < MT_N - MT_M; kk++)
-        {
+        for (kk = 0; kk < MT_N - MT_M; kk++) {
             y = (mt[kk] & MT_UPPER_MASK) | (mt[kk + 1] & MT_LOWER_MASK);
             mt[kk] = mt[kk + MT_M] ^ (y >> 1) ^ mag01[y & 0x1UL];
         }
-        for (; kk < MT_N - 1; kk++)
-        {
+        for (; kk < MT_N - 1; kk++) {
             y = (mt[kk] & MT_UPPER_MASK) | (mt[kk + 1] & MT_LOWER_MASK);
             mt[kk] = mt[kk + (MT_M - MT_N)] ^ (y >> 1) ^ mag01[y & 0x1UL];
         }
@@ -121,14 +117,16 @@ static double genrand_res53(void)
 #undef MT_LOWER_MASK
 
 /*
- * non-static original content
+ * The remainder of this file is
+ * Copyright (C) 2010-2011 Nicolas Limare <nicolas.limare@cmla.ens-cachan.fr>
+ * and distributed under the same conditions as the original file.
  */
 
 /** @file mt19937ar.c
  * @brief Mersenne Twister pseudo-RNG code
  *
  * This is the original code by Takuji Nishimura and Makoto Matsumoto,
- * amended to keep only the parts used.
+ * amended to keep only the parts used and with the finctions renamed.
  * Source : http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
  *
  * @author Makoto Matsumoto (1997 - 2002)
@@ -137,15 +135,27 @@ static double genrand_res53(void)
  */
 
 /* ensure consistency */
-#include "mt19937ar.h"
+#include "mt.h"
 
-/* string tag inserted into the binary, helps tracking versions */
-char _mt19937ar_tag[] = "using mt19937ar " MT19937AR_VERSION;
+/* string tag inserted into the binary */
+static char mt_tag[] = "using mt " MT_VERSION;
+/**
+ * @brief helps tracking versions, via the string tag inserted into
+ * the library
+ *
+ * This function is not exopected to be used in real-world programs.
+ *
+ * @return a pointer to a version info string
+ */
+char *mt_info(void)
+{
+    return mt_tag;
+}
 
 /**
  * @brief initializes the generator with a seed
  */
-void mt_init_genrand(unsigned long s)
+void mt_init(unsigned long s)
 {
     init_genrand(s);
     return;
@@ -154,7 +164,7 @@ void mt_init_genrand(unsigned long s)
 /**
  * @brief generates a random number on [0,1) with 53-bit resolution
  */
-double mt_genrand_res53(void)
+double mt_drand53(void)
 {
     return genrand_res53();
 }

@@ -8,7 +8,7 @@
 # main makefile config
 -include makefile
 
-PROJECT	= mt19937ar
+PROJECT	= mt
 DATE	= $(shell date -u +%Y%m%d)
 RELEASE_TAG   = 0.$(DATE)
 
@@ -29,7 +29,7 @@ beautify	: beautify.flag
 beautify.flag	: $(CSRC)
 	for FILE in $?; do \
 		expand $$FILE | sed 's/[ \t]*$$//' > $$FILE.$$$$ \
-		&& indent -kr -bl -bli0 -i4 -l78 -nut -nce -sob -sc \
+		&& indent -kr -br -bli0 -i4 -l78 -nut -nce -sob -sc \
 			$$FILE.$$$$ -o $$FILE \
 		&& rm $$FILE.$$$$; \
 	done

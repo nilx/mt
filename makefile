@@ -6,7 +6,7 @@
 # offered as-is, without any warranty.
 
 # source code, C language
-CSRC	= mt19937ar.c mt19937ar_example.c
+CSRC	= mt.c example.c
 
 # source code, all languages (only C here)
 SRC	= $(CSRC)

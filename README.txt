@@ -1,4 +1,4 @@
-% mt19937ar : Mersenne Twister pseudo-random number generator
+% mt: Mersenne Twister pseudo-random number generator
 
 * overview
 * license
@@ -9,8 +9,8 @@
 
 # OVERVIEW
 
-mt19937ar.c contains the Mersenne Twister pseudo-random number
-generator, by Takuji Nishimura and Makoto Matsumoto.
+mt.c contains the Mersenne Twister pseudo-random number generator, by
+Takuji Nishimura and Makoto Matsumoto (mt19937ar.c).
 
 This geneator is fast and produces good pseudo-randomness. It has a
 very long period of 2^19937 − 1 and is k-distributed to 32-bit
@@ -35,32 +35,31 @@ includiong commercial use.
 
 # REQUIREMENTS
 
-mt19937ar.c is ANSI C, and should compile on any system with any ANSI C 
+mt.c is ANSI C, and should compile on any system with any ANSI C
 compiler.
 
 # USAGE
 
-Compile mt19937ar.c with your program, and include mt19937ar.h to get the
-function declarations.
+Compile mt.c with your program, and include mt.h to get the function
+declarations.
 
-Initialize the random number generator with mt_init_genrand().
+Initialize the random number generator with mt_init().
 
 Get a random number in [0, 1) with 53 random bits (the maximum
-randomness for such number in double-precision) with mt_genrand_res53().
+randomness for such number in double-precision) with mt_drand53().
 
 ## EXAMPLE
 
-see mt19937ar_example.c
+see example.c
 
 # TODO
 
 * provide examples of better yet portable initializations
-* use better names
 * integer variant
 
 # COPYRIGHT
 
-Copyright 2010 Nicolas Limare <nicolas.limare@cmla.ens-cachan.fr>
+Copyright 2010-2011 Nicolas Limare <nicolas.limare@cmla.ens-cachan.fr>
 
 Copying and distribution of this README file, with or without
 modification, are permitted in any medium without royalty provided
