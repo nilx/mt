@@ -143,7 +143,7 @@ static char mt_tag[] = "using mt " MT_VERSION;
  * @brief helps tracking versions, via the string tag inserted into
  * the library
  *
- * This function is not exopected to be used in real-world programs.
+ * This function is not expected to be used in real-world programs.
  *
  * @return a pointer to a version info string
  */
