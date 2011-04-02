@@ -127,7 +127,7 @@ static double genrand_res53(void)
  *
  * This is the original code by Takuji Nishimura and Makoto Matsumoto,
  * amended to keep only the parts used and with the finctions renamed.
- * Source : http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
+ * Source: http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
  *
  * @author Makoto Matsumoto (1997 - 2002)
  * @author Takuji Nishimura (1997 - 2002)

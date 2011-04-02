@@ -2,7 +2,7 @@
  * This file shows how to use mt.c. It is released in the public
  * domain and as such comes with no copyright requirement.
  *
- * compile with : cc example.c mt.c
+ * compile with: cc example.c mt.c
  */
 
 #include <stdlib.h>

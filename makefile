@@ -15,7 +15,7 @@ OBJ	= $(CSRC:.c=.o)
 # binary executable program
 BIN	= example
 
-# default target : the binary executable program
+# default target: the binary executable program
 default: $(BIN)
 
 # standard C compiler optimization options
