@@ -7,7 +7,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
 
 /* include the mt prototypes */
 #include "mt.h"
@@ -19,13 +18,11 @@ int main(int argc, char *const *argv)
     if (1 < argc)
         /* if a parameter is given, it is used for the initialisation */
         mt_init((unsigned long int) atol(argv[1]));
-    else {
+    else
         /*
-         * without parameter, the (weak) initialization
-         * uses the current time, in seconds
-         */
-        mt_init((unsigned long int) time(NULL));
-    }
+         * without parameter, use the automatic initialization
+	 */
+	mt_init_auto();
 
     /*
      * now we can get 1024 pseudo-random value

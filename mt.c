@@ -134,6 +134,19 @@ static double genrand_res53(void)
  *
  */
 
+#include <time.h>
+
+/* get the high-precision timer specified by POSIX.1-2001 if available */
+#if defined(unix) || defined(__unix__) || defined(__unix)
+# include <unistd.h>
+# if defined(_POSIX_VERSION)
+#   if (_POSIX_VERSION >= 200112L)
+#     include <sys/time.h>
+#     define USE_GETTIMEOFDAY
+#   endif
+# endif
+#endif
+
 /* ensure consistency */
 #include "mt.h"
 
@@ -158,6 +171,34 @@ char *mt_info(void)
 void mt_init(unsigned long s)
 {
     init_genrand(s);
+    return;
+}
+
+/**
+ * @brief initializes the generator from the current time
+ */
+void mt_init_auto(void)
+{
+    unsigned long int seed;
+
+    /*
+     * the basic (weak) initialization
+     * uses the current time, in seconds
+     */
+    seed = (unsigned long int) time(NULL);
+
+#if defined(USE_GETTIMEOFDAY)
+    /* gettimeofday() provides a millisecond time */
+    {
+	struct timeval tp;
+	(void) gettimeofday(&tp, NULL);
+
+	seed *= 1000000;
+	seed += tp.tv_usec;
+    }
+#endif
+
+    mt_init(seed);
     return;
 }
 
