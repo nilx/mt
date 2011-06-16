@@ -21,14 +21,14 @@ int main(int argc, char *const *argv)
     else
         /*
          * without parameter, use the automatic initialization
-	 */
-	mt_init_auto();
+         */
+        mt_init_auto();
 
     /*
      * now we can get 1024 pseudo-random value
      */
     for (i = 0; i < 1024; i++)
-        printf("%10.8f\n", mt_drand53());
+        printf("%18.16f\n", mt_drand53());
 
     return EXIT_SUCCESS;
 }

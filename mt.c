@@ -138,13 +138,13 @@ static double genrand_res53(void)
 
 /* get the high-precision timer specified by POSIX.1-2001 if available */
 #if defined(unix) || defined(__unix__) || defined(__unix)
-# include <unistd.h>
-# if defined(_POSIX_VERSION)
-#   if (_POSIX_VERSION >= 200112L)
-#     include <sys/time.h>
-#     define USE_GETTIMEOFDAY
-#   endif
-# endif
+#include <unistd.h>
+#if defined(_POSIX_VERSION)
+#if (_POSIX_VERSION >= 200112L)
+#include <sys/time.h>
+#define USE_GETTIMEOFDAY
+#endif
+#endif
 #endif
 
 /* ensure consistency */
@@ -190,11 +190,11 @@ void mt_init_auto(void)
 #if defined(USE_GETTIMEOFDAY)
     /* gettimeofday() provides a millisecond time */
     {
-	struct timeval tp;
-	(void) gettimeofday(&tp, NULL);
+        struct timeval tp;
+        (void) gettimeofday(&tp, NULL);
 
-	seed *= 1000000;
-	seed += tp.tv_usec;
+        seed *= 1000000;
+        seed += tp.tv_usec;
     }
 #endif
 

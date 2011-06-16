@@ -43,7 +43,10 @@ compiler.
 Compile mt.c with your program, and include mt.h to get the function
 declarations.
 
-Initialize the random number generator with mt_init().
+Initialize the random number generator with mt_init(). You can
+automatically initialize from the current time with
+mt_init_auto(). The automatic initialization will be better on POSIX
+systems (using milliseconds instead of seconds).
 
 Get a random number in [0, 1) with 53 random bits (the maximum
 randomness for such number in double-precision) with mt_drand53().
@@ -54,8 +57,8 @@ see example/rand.c
 
 # TODO
 
-* provide examples of better yet portable initializations
 * integer variant
+* better initializations
 
 # COPYRIGHT
 
