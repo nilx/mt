@@ -50,7 +50,7 @@ randomness for such number in double-precision) with mt_drand53().
 
 ## EXAMPLE
 
-see example.c
+see example/rand.c
 
 # TODO
 

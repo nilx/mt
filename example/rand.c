@@ -30,10 +30,3 @@ int main()
 
     return EXIT_SUCCESS;
 }
-
-/**
- * @mainpage mt: portable pseudo-random number generator
- *
- * README.txt:
- * @verbinclude README.txt
- */
