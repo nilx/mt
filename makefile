@@ -58,11 +58,14 @@ beautify	: $(CSRC)
 			$$FILE.$$$$ -o $$FILE \
 		&& rm $$FILE.$$$$; \
 	done
-# static code analysis
+# static code analysis - ansi and posix libs are needed for mt_init_auto()
 lint	: $(CSRC)
-	for FILE in $^; do splint -ansi-lib -weak -I. $$FILE; done;
-	for FILE in $^; do splint -posix-lib -weak -I. $$FILE; done;
-	for FILE in $^; do clang --analyze -ansi -I. $$FILE; done; $(RM) *.plist
+	for FILE in $^; do \
+		clang --analyze -ansi -I. $$FILE || exit 1; done;
+	for FILE in $^; do \
+		splint -ansi-lib -weak -I. $$FILE || exit 1; \
+		splint -posix-lib -weak -I. $$FILE || exit 1; done;
+	$(RM) *.plist
 # code tests
 test	: $(CSRC)
 	sh -e test/run.sh && echo SUCCESS || ( echo ERROR; return 1)
