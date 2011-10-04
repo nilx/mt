@@ -18,13 +18,15 @@ BIN	= example/rand
 COPT	= -O2
 # complete C compiler options
 CFLAGS	= -ansi -pedantic -Wall -Wextra -Werror -pipe $(COPT)
+# preprocessor options
+CPPFLAGS	= -I. -DNDEBUG
 
 # default target: the binary executable program
 default: $(BIN)
 
 # partial C compilation xxx.c -> xxx.o
 %.o	: %.c
-	$(CC) $< -c $(CFLAGS) -I. -o $@
+	$(CC) -c -o $@ $< $(CFLAGS) $(CPPFLAGS)
 
 # final link of the partially compiled files
 $(BIN)	: $(OBJ)
