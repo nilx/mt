@@ -7,7 +7,8 @@
 # folder.
 _test_rand() {
     TEMPFILE=$(tempfile)
-    example/rand 0 > $TEMPFILE
+    ./example/rand 0 > $TEMPFILE
+    dos2unix $TEMPFILE #when compiled with mingw
     test "0b832acf8e8ae5758b2cc280d97fcce0  $TEMPFILE" \
 	= "$(md5sum $TEMPFILE)"
     rm -f $TEMPFILE
@@ -26,7 +27,8 @@ _log make clean
 _log make
 
 echo "* compiler support"
-for CC in cc c++ c99 gcc g++ tcc nwcc clang icc pathcc suncc; do
+for CC in cc c++ c99 gcc g++ tcc nwcc clang icc pathcc suncc \
+    i586-mingw32msvc-cc; do
     which $CC || continue
     echo "* $CC compiler"
     _log make distclean
