@@ -15,7 +15,7 @@ OBJ	= $(CSRC:.c=.o)
 BIN	= example/rand
 
 # standard C compiler optimization options
-COPT	= -O2 -funroll-loops -fomit-frame-pointer
+COPT	= -O2
 # complete C compiler options
 CFLAGS	= -ansi -pedantic -Wall -Wextra -Werror -pipe $(COPT)
 
@@ -40,36 +40,6 @@ distclean	: clean
 	$(RM) -r srcdoc
 
 ################################################
-# extra tasks
-
+# dev tasks
 PROJECT	= mt
-DATE	= $(shell date -u +%Y%m%d)
-RELEASE_TAG   = 0.$(DATE)
-
-.PHONY	: srcdoc lint beautify test release
-# source documentation
-srcdoc	: $(SRC)
-	doxygen doc/doxygen.conf
-# code cleanup
-beautify	: $(CSRC)
-	for FILE in $^; do \
-		expand $$FILE | sed 's/[ \t]*$$//' > $$FILE.$$$$ \
-		&& indent -kr -i4 -l78 -nut -nce -sob -sc \
-			$$FILE.$$$$ -o $$FILE \
-		&& rm $$FILE.$$$$; \
-	done
-# static code analysis - ansi and posix libs are needed for mt_init_auto()
-lint	: $(CSRC)
-	for FILE in $^; do \
-		clang --analyze -ansi -I. $$FILE || exit 1; done;
-	for FILE in $^; do \
-		splint -ansi-lib -weak -I. $$FILE || exit 1; \
-		splint -posix-lib -weak -I. $$FILE || exit 1; done;
-	$(RM) *.plist
-# code tests
-test	: $(CSRC)
-	sh -e test/run.sh && echo SUCCESS || ( echo ERROR; return 1)
-# release tarball
-release	: beautify lint test distclean
-	git archive --format=tar --prefix=$(PROJECT)-$(RELEASE_TAG)/ HEAD \
-	        | gzip > ../$(PROJECT)-$(RELEASE_TAG).tar.gz
+-include	makefile.dev
