@@ -126,7 +126,7 @@ static double genrand_res53(void)
  * @brief Mersenne Twister pseudo-RNG code
  *
  * This is the original code by Takuji Nishimura and Makoto Matsumoto,
- * amended to keep only the parts used and with the finctions renamed.
+ * amended to keep only the parts used and with the functions renamed.
  * Source: http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
  *
  * @author Makoto Matsumoto (1997 - 2002)
