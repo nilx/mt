@@ -14,10 +14,10 @@ OBJ	= $(CSRC:.c=.o)
 # binary executable program
 BIN	= example/rand
 
-# standard C compiler optimization options
+# C compiler optimization options
 COPT	= -O2
 # complete C compiler options
-CFLAGS	= -ansi -pedantic -Wall -Wextra -Werror -pipe $(COPT)
+CFLAGS	= $(COPT)
 # preprocessor options
 CPPFLAGS	= -I. -DNDEBUG
 
