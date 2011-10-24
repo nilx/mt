@@ -51,6 +51,13 @@ systems (using milliseconds instead of seconds).
 Get a random number in [0, 1) with 53 random bits (the maximum
 randomness for such number in double-precision) with mt_drand53().
 
+## WARNING
+
+This code is not thread-safe. You will not collect correct random values
+if it is called in a multi-thread context. For parallel code, use a
+reentrant implementation, like Pascal Getreuer's randmt:
+-> http://www.getreuer.info/home/randmt
+
 ## EXAMPLE
 
 see example/rand.c
