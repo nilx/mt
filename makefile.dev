@@ -28,7 +28,7 @@ beautify	: $(CSRC)
 
 # static code analysis and strict build
 # ansi and posix libs are needed for mt_init_auto()
-lint	: $(CSRC)
+lint	: $(SRC)
 	clang --analyze -ansi -I. $^
 	splint -ansi-lib -weak -I. $^
 	splint -posix-lib -weak -I. $^
@@ -43,7 +43,7 @@ debug   : $(SRC)
 		CPPFLAGS="$(CPPFLAGS) -UNDEBUG" LDFLAGS="$(LDFLAGS) -lefence"
 
 # code tests
-test	: $(CSRC)
+test	: $(SRC)
 	sh -e test/run.sh && echo SUCCESS || ( echo ERROR; return 1)
 
 # release tarball

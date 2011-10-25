@@ -6,11 +6,9 @@
 # offered as-is, without any warranty.
 
 # source code, C language
-CSRC	= mt.c example/rand.c
-# source code, all languages (only C here)
-SRC	= $(CSRC)
+SRC	= mt.c example/rand.c
 # object files (partial compilation)
-OBJ	= $(CSRC:.c=.o)
+OBJ	= $(SRC:.c=.o)
 # binary executable program
 BIN	= example/rand
 
@@ -20,20 +18,29 @@ COPT	= -O2
 CFLAGS	= $(COPT)
 # preprocessor options
 CPPFLAGS	= -I. -DNDEBUG
+# linker options
+LDFLAGS	=
+# libraries
+LDLIBS	=
 
 # default target: the binary executable program
 default: $(BIN)
 
+# dependencies
+-include makefile.dep
+makefile.dep    : $(SRC)
+	$(CC) $(CPPFLAGS) -MM $^ > $@
+
 # partial C compilation xxx.c -> xxx.o
 %.o	: %.c
-	$(CC) -c -o $@ $< $(CFLAGS) $(CPPFLAGS)
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
 
 # final link of the partially compiled files
 $(BIN)	: $(OBJ)
-	$(CC) $(OBJ) -o $@
+	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 # cleanup
-.PHONY	: clean distclean scrub
+.PHONY	: clean distclean
 clean	:
 	$(RM) $(OBJ)
 	$(RM) *.flag

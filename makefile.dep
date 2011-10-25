@@ -1,0 +1,2 @@
+mt.o: mt.c mt.h
+rand.o: example/rand.c mt.h
